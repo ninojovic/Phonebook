@@ -5,7 +5,7 @@ const numCPUs = require('os').cpus().length;
 const { Client } = require('pg');
 
 const client = new Client({
-  connectionString:process.env.DATABASE_URL,
+  connectionString:"postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4",
   ssl: true,
 })
 
