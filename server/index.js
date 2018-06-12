@@ -49,7 +49,7 @@ if (cluster.isMaster) {
   app.get('/contact/1', function (request, response) {
     client.query('SELECT * FROM contact WHERE id=2;', (err, res) => {
       response.set('Content-Type', 'application/json');
-      response.send('{"row":"row"}')
+      response.send(`{'${res.row}':'${res}'}`)
     });
   });
 
