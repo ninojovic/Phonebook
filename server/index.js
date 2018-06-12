@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -16,6 +17,9 @@ const cn = {
 const db = pgp(cn)
 
 const PORT = process.env.PORT || 5000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
@@ -50,6 +54,21 @@ if (cluster.isMaster) {
 
   app.delete('/remove/:id', function (request, response) {
     db.result('DELETE FROM contact WHERE id = $1', request.params.id)
+    .then(function(data) {
+      response.set('Content-Type', 'application/json');
+      response.send(data);
+    })
+    .catch(function(error) {
+      console.log(error)
+    });
+  });
+
+  app.post('/new', function (request, response) {
+    const first_name = request.body.first_name;
+    const last_name = request.body.last_name;
+    const phone_number = request.body.phone_number;
+
+    db.result('INSERT INTO contact (first_name, last_name, phone_number) VALUES ($1, $2, $3)', [first_name, last_name, phone_number])
     .then(function(data) {
       response.set('Content-Type', 'application/json');
       response.send(data);
