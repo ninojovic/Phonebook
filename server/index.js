@@ -10,7 +10,7 @@ const client = new Client({
 })
 
 client.connect();
-console.log(process.env, process.env.DATABASE_URL)
+
 client.query('SELECT * FROM contact;', (err, res) => {
   if (err) throw err;
   for (let row of res.rows) {
@@ -45,11 +45,14 @@ if (cluster.isMaster) {
     res.set('Content-Type', 'application/json');
     res.send('{"message":"Hello from blabla!"}');
   });
-
+  
   app.get('/contact/1', function (request, response) {
     client.query('SELECT * FROM contact WHERE id=2;', (err, res) => {
       response.set('Content-Type', 'application/json');
-      response.send(`{'${res.row}':'${res}'}`)
+      console.log(client);
+      console.log(res);
+      console.log(err);
+      response.send(`{'bla':'bla'}`)
     });
   });
 
