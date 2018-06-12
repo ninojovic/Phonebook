@@ -10,7 +10,7 @@ const client = new Client({
 })
 
 client.connect();
-
+console.log(process.env, process.env.DATABASE_URL)
 client.query('SELECT * FROM contact;', (err, res) => {
   if (err) throw err;
   for (let row of res.rows) {
