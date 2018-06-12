@@ -57,16 +57,29 @@ if (cluster.isMaster) {
     res.set('Content-Type', 'application/json');
     res.send('{"message":"Hello from blabla!"}');
   });
-  
-  app.get('/contact/1', function (request, response) {
-    db.any('SELECT * FROM contact WHERE id=2', [true])
-    .then(function(data) {
+
+  app.get('/test', function (req, res) {
+    db.connect()
+    .then(function (obj) {
       res.set('Content-Type', 'application/json');
       res.send('{"message":"resolved"}');
+        obj.done();
     })
-    .catch(function(error) {
+    .catch(function (error) {
       res.set('Content-Type', 'application/json');
       res.send('{"message":"rejected"}');
+    });
+  });
+  
+  app.get('/contact/1', function (request, response) {
+    db.any('SELECT * FROM contact', [true])
+    .then(function(data) {
+      response.set('Content-Type', 'application/json');
+      response.send('{"message":"resolved"}');
+    })
+    .catch(function(error) {
+      response.set('Content-Type', 'application/json');
+      response.send('{"message":"rejected"}');
     });
   });
 
