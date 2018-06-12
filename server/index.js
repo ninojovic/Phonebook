@@ -5,7 +5,16 @@ const numCPUs = require('os').cpus().length;
 const { Client } = require('pg');
 const pgp = require('pg-promise')();
 
-const db = pgp("postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4")
+const cn = {
+  host: 'ec2-23-23-226-190.compute-1.amazonaws.com',
+  port: 5432,
+  database: 'd5joh0ms7arpe4',
+  user: 'gfaxkjdhdswqty',
+  password: '7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f',
+  ssl: true,
+};
+
+const db = pgp(cn)
 
 // const client = new Client({
 //   connectionString:"postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4",
