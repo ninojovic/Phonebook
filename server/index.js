@@ -50,13 +50,14 @@ if (cluster.isMaster) {
   });
   
   app.get('/contact/1', function (request, response) {
-    db.any('SELECT * FROM contact WHERE id=1', [true])
+    db.any('SELECT * FROM contact WHERE id=2', [true])
     .then(function(data) {
       res.set('Content-Type', 'application/json');
-      res.send('{"message":"Hello from blabla!"}');
+      res.send('{"message":"resolved"}');
     })
     .catch(function(error) {
-        // error;
+      res.set('Content-Type', 'application/json');
+      res.send('{"message":"rejected"}');
     });
   });
 
