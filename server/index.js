@@ -51,7 +51,7 @@ if (cluster.isMaster) {
   app.delete('/contacts/:id', function (request, response) {
     const id = req.params.id;
 
-    db.result('DELETE FROM contact WHERE id = $1', id)
+    db.result('DELETE FROM contact WHERE id = $1', [id])
     .then(function(data) {
       response.set('Content-Type', 'application/json');
       response.send(data);
