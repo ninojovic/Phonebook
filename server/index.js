@@ -48,8 +48,8 @@ if (cluster.isMaster) {
     });
   });
 
-  app.delete('/contacts/:id', function (request, response) {
-    db.one('DELETE FROM contact WHERE id = $1', request.params.id)
+  app.delete('/remove/:id', function (request, response) {
+    db.result('DELETE FROM contact WHERE id = $1', request.params.id)
     .then(function(data) {
       response.set('Content-Type', 'application/json');
       response.send(data);
