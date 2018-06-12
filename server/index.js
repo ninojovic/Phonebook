@@ -18,12 +18,9 @@ const db = pgp(cn)
 
 const PORT = process.env.PORT || 5000;
 
-
-// Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`);
   
-  // Fork workers.
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
@@ -34,14 +31,18 @@ if (cluster.isMaster) {
   
 } else {
   const app = express();
-  
+
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
-  // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
   
-  // Get request returning all the contacts
   app.get('/contacts', function (request, response) {
     db.any('SELECT * FROM contact', [true])
     .then(function(data) {
@@ -79,7 +80,6 @@ if (cluster.isMaster) {
     });
   });
 
-  // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
   });

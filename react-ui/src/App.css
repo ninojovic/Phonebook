@@ -6,7 +6,7 @@
 
 body {
     background-image: url("./assets/img/background.jpg");
-    background-size: cover;
+    background-size: 130%;
 }
 
 main {
@@ -23,12 +23,71 @@ p {
     padding: 5px;
 }
 
+h1 {
+    margin: 0 !important;
+}
+
 .labels {
-    margin-top: 40px;
-    border: 2px solid #253339;
+    border: 2px solid #1f2c31;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
+    background: #1f2c31;
+    color: gray;
+}
+
+.item.row {
+    margin-bottom: 7px;
+    border: 2px solid #253339;
+    font-size: 15px;
     background: gray;
+    font-weight: bold;
+
+    font-style: italic;
+}
+
+.delete {
+    cursor: pointer;
+    color: brown;
+    font-size: 15px;
+}
+
+.addContact {
+    margin-top: 15px;
+}
+
+.btn, .btn-large, addContact {
+    background-color: gray !important;
+
+}
+
+input {
+    margin-top: 15px !important;
+    height: 35px !important;
+    border-radius: 5px !important;
+    background-color: whitesmoke !important;
+    text-align: center;
+}
+
+::placeholder {
+    color: black !important;
+}
+
+label {
+    font-size: 15px !important;
+    color: whitesmoke !important;
+}
+
+.show {
+    display: initial;
+}
+
+.hide {
+    display:none;
+}
+
+button.submit {
+    margin-bottom: 15px;
+    border-radius: 15px;
 }
