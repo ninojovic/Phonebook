@@ -11,7 +11,7 @@ const client = new Client({
 
 client.connect();
 
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+client.query('SELECT * FROM contact;', (err, res) => {
   if (err) throw err;
   for (let row of res.rows) {
     console.log(JSON.stringify(row));
@@ -43,7 +43,14 @@ if (cluster.isMaster) {
   // Answer API requests.
   app.get('/api', function (req, res) {
     res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from the custom server!"}');
+    res.send('{"message":"Hello from blabla!"}');
+  });
+
+  app.get('/contact/1', function (request, response) {
+    client.query('SELECT * FROM contact WHERE id=2;', (err, res) => {
+      response.set('Content-Type', 'application/json');
+      response.send('{"row":"row"}')
+    });
   });
 
   // All remaining requests return the React app, so it can handle routing.
