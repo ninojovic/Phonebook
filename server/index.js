@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
-const { Client } = require('pg');
 const pgp = require('pg-promise')();
 
 const cn = {
@@ -15,21 +14,6 @@ const cn = {
 };
 
 const db = pgp(cn)
-
-// const client = new Client({
-//   connectionString:"postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4",
-//   ssl: true,
-// })
-
-// client.connect();
-
-// client.query('SELECT * FROM contact;', (err, res) => {
-//   if (err) throw err;
-//   for (let row of res.rows) {
-//     console.log(JSON.stringify(row));
-//   }
-//   client.end();
-// });
 
 const PORT = process.env.PORT || 5000;
 
@@ -51,34 +35,29 @@ if (cluster.isMaster) {
 
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-
-  // Answer API requests.
-  app.get('/api', function (req, res) {
-    res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from blabla!"}');
-  });
   
-  app.get('/contact/1', function (request, response) {
+  // Get request returning all the contacts
+  app.get('/contacts', function (request, response) {
     db.any('SELECT * FROM contact', [true])
     .then(function(data) {
       response.set('Content-Type', 'application/json');
       response.send(data);
     })
     .catch(function(error) {
-      response.set('Content-Type', 'application/json');
-      response.send('{"message":"rejected"}');
+      console.log(error)
     });
   });
-  app.get('/contact/2', function (request, response) {
-    db.any('SELECT * FROM contact', [true])
+
+  app.delete('/contacts/:id', function (request, response) {
+    const id = req.params.id;
+
+    db.any(`DELETE FROM contact WHERE id = ${id}`, [true])
     .then(function(data) {
       response.set('Content-Type', 'application/json');
-      const rawData = JSON.stringify(data);
-      response.send(rawData);
+      response.send(data);
     })
     .catch(function(error) {
-      response.set('Content-Type', 'application/json');
-      response.send('{"message":"rejected"}');
+      console.log(error)
     });
   });
 
