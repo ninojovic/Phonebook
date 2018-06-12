@@ -3,21 +3,24 @@ const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const { Client } = require('pg');
+const pgp = require('pg-promise')();
 
-const client = new Client({
-  connectionString:"postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4",
-  ssl: true,
-})
+const db = pgp("postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4")
 
-client.connect();
+// const client = new Client({
+//   connectionString:"postgres://gfaxkjdhdswqty:7d38e1568462246cdfe62ced41c8d5fd42d1188c114e92be8efb6a087456147f@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d5joh0ms7arpe4",
+//   ssl: true,
+// })
 
-client.query('SELECT * FROM contact;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-});
+// client.connect();
+
+// client.query('SELECT * FROM contact;', (err, res) => {
+//   if (err) throw err;
+//   for (let row of res.rows) {
+//     console.log(JSON.stringify(row));
+//   }
+//   client.end();
+// });
 
 const PORT = process.env.PORT || 5000;
 
@@ -47,12 +50,13 @@ if (cluster.isMaster) {
   });
   
   app.get('/contact/1', function (request, response) {
-    client.query('SELECT * FROM contact WHERE id=2;', (err, res) => {
-      response.set('Content-Type', 'application/json');
-      console.log(client);
-      console.log(res);
-      console.log(err);
-      response.send(`{'bla':'bla'}`)
+    db.any('SELECT * FROM contact WHERE id=1', [true])
+    .then(function(data) {
+      res.set('Content-Type', 'application/json');
+      res.send('{"message":"Hello from blabla!"}');
+    })
+    .catch(function(error) {
+        // error;
     });
   });
 
