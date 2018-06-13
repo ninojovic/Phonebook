@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ContactList from './components/ContactList'
 
 import CommService from "./services/CommService"
+import Validation from "./services/ValidationService"
 
 class Main extends Component {
     state = {
@@ -10,7 +11,7 @@ class Main extends Component {
         nameValue: "",
         surnameValue: "",
         numberValue: "",
-        updateChild: true,
+        updateContactList: true,
     }
 
     toggleForm = () => {
@@ -23,11 +24,23 @@ class Main extends Component {
 
     submit = (e) => {
         const { nameValue, surnameValue, numberValue } = this.state;
+        
+        if(!Validation.validateName(nameValue) || !Validation.validateName(surnameValue)){
+            alert("First and Last name must start with Capital letter and cannot be empty");
+            return;
+        }
+
+        if(!Validation.validateNumber(numberValue)){
+            alert("Please enter a valid number");
+            return;
+        }
+
         const body = {
             "first_name": nameValue,
             "last_name": surnameValue,
             "phone_number": numberValue
         }
+
 
         CommService.addContact(body)
             .then((res) => {
@@ -35,9 +48,13 @@ class Main extends Component {
                     nameValue: "",
                     surnameValue: "",
                     numberValue: "",
-                    updateChild: !this.state.updateChild
+                    updateContactList: !this.state.updateContactList
                 })
             })
+    }
+
+    enter = (e) => {
+        console.log(e.target.keyCode)
     }
 
     render() {
@@ -69,7 +86,7 @@ class Main extends Component {
                             <button onClick={(e) => { e.preventDefault(); this.submit(e) }} className="btn submit">submit</button>
                         </div>
                     </form>
-                    <ContactList reload={this.state.updateChild}/>
+                    <ContactList reload={this.state.updateContactList}/>
                 </div>
             </main>
         );
