@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-import { BASE_URL } from "../shared/constants";
+//For local testing uncomment line above and comment BASE_URL declaration
+//import { BASE_URL } from "../shared/constants";
+
+const BASE_URL = "";
 
 export default class CommService {
     static getContacts = () => {
