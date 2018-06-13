@@ -5,17 +5,17 @@ const ContactItem = ({ id, firstName, lastName, phoneNumber, deleteReq }) =>{
         deleteReq(id)
     }
 
-    return <div className="row center item">
-        <div className="col s4">
+    return <div className="row item">
+        <div className="col m4 s3">
             <p>{firstName}</p>
         </div>
-        <div className="col s4">
+        <div className="col m4 s4">
             <p>{lastName}</p>
         </div>
-        <div className="col s3">
+        <div className="col m3 s4 ">
             <p>{phoneNumber}</p>
         </div>
-        <div className="col s1">
+        <div className="col m1 s1">
             <p className="delete" onClick={removeContact}>X</p>
         </div>
     </div>

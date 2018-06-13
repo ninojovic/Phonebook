@@ -6,7 +6,6 @@
 
 body {
     background-image: url("./assets/img/background.jpg");
-    background-size: 130%;
 }
 
 main {
@@ -25,6 +24,10 @@ p {
 
 h1 {
     margin: 0 !important;
+}
+
+h2 {
+    color: gray;
 }
 
 .labels {
@@ -54,16 +57,17 @@ h1 {
 }
 
 .addContact {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .btn, .btn-large, addContact {
     background-color: gray !important;
-
+    width: 100%;
+    font-size: 12px !important;
 }
 
 input {
-    margin-top: 15px !important;
+    margin-top: 5px !important;
     height: 35px !important;
     border-radius: 5px !important;
     background-color: whitesmoke !important;
@@ -75,7 +79,8 @@ input {
 }
 
 label {
-    font-size: 15px !important;
+
+    font-size: 12px !important;
     color: whitesmoke !important;
 }
 
@@ -90,4 +95,17 @@ label {
 button.submit {
     margin-bottom: 15px;
     border-radius: 15px;
+    width: 100%;
+}
+
+@media(max-width: 420px) {
+    p {
+        font-size: 11px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .delete {
+        font-size: 11px;
+    }
 }

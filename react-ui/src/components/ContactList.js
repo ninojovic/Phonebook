@@ -52,15 +52,15 @@ class ContactList extends Component {
 
         return (
             <div className="row">
-                <div className="col s8 offset-s2">
-                    <div className="row center labels">
-                        <div className="col s4">
+                <div className="col m8 offset-m2 s12">
+                    <div className="row labels">
+                        <div className="col m4 s3">
                             <p>Name</p>
                         </div>
-                        <div className="col s4">
+                        <div className="col m4 s4">
                             <p>Surname</p>
                         </div>
-                        <div className="col s3">
+                        <div className="col m3 s4">
                             <p>Number</p>
                         </div>
                     </div>

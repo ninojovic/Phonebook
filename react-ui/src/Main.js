@@ -63,27 +63,27 @@ class Main extends Component {
             <main className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <div className="col s8 addContact">
-                            <button className="btn modal-trigger" onClick={this.toggleForm}>ADD contact</button>
+                        <div className="col s12 m6 l4 addContact">
+                            <button className="btn modal-trigger" onClick={this.toggleForm}>ADD NEW</button>
                         </div>
-                        <div className="col s4">
+                        <div className="col s12 m6 l4 offset-l4">
                             <input className="search" type="text" name="searchValue" onChange={this.handleChange} placeholder="search for surname" />
                         </div>
                     </div>
                     <form className={`col s8 offset-s2 center ${(this.state.showForm) ? "show" : "hide"}`}>
-                        <div className="col s4">
+                        <div className="col s12 m4">
                             <label>First Name:</label>
                             <input type="text" name="nameValue" value={this.state.nameValue} onChange={this.handleChange} />
                         </div>
-                        <div className="col s4">
+                        <div className="col s12 m4">
                             <label>Last Name:</label>
                             <input type="text" name="surnameValue" value={this.state.surnameValue} onChange={this.handleChange} />
                         </div>
-                        <div className="col s4">
+                        <div className="col s12 m4">
                             <label>Phone Number:</label>
                             <input type="text" name="numberValue" value={this.state.numberValue} onChange={this.handleChange} />
                         </div>
-                        <div className="col s4 offset-s4">
+                        <div className="col s12 m4 offset-m4">
                             <button onClick={(e) => { e.preventDefault(); this.submit(e) }} className="btn submit">submit</button>
                         </div>
                     </form>
