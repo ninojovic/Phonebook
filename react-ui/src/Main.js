@@ -12,6 +12,7 @@ class Main extends Component {
         surnameValue: "",
         numberValue: "",
         updateContactList: true,
+        searchValue: "",
     }
 
     toggleForm = () => {
@@ -66,7 +67,7 @@ class Main extends Component {
                             <button className="btn modal-trigger" onClick={this.toggleForm}>ADD contact</button>
                         </div>
                         <div className="col s4">
-                            <input className="search" type="text" placeholder="search for surname" />
+                            <input className="search" type="text" name="searchValue" onChange={this.handleChange} placeholder="search for surname" />
                         </div>
                     </div>
                     <form className={`col s8 offset-s2 center ${(this.state.showForm) ? "show" : "hide"}`}>
@@ -86,7 +87,7 @@ class Main extends Component {
                             <button onClick={(e) => { e.preventDefault(); this.submit(e) }} className="btn submit">submit</button>
                         </div>
                     </form>
-                    <ContactList reload={this.state.updateContactList}/>
+                    <ContactList reload={this.state.updateContactList} searchValue={this.state.searchValue}/>
                 </div>
             </main>
         );

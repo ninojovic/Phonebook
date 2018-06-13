@@ -13,8 +13,8 @@ class ContactList extends Component {
         this.fetchAndMap();
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.reload !== this.props.reload){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.reload !== this.props.reload) {
             this.fetchAndMap();
         }
     }
@@ -34,8 +34,22 @@ class ContactList extends Component {
             })
     }
 
+    filterContacts = (contacts, filterValue) => {
+        const filtered = contacts.filter(({ lastName }) => {
+            let normalizedLastName = lastName.toLowerCase();
+            let normalizedSearchValue = filterValue.toLowerCase();
+
+            return (normalizedLastName.indexOf(normalizedSearchValue) !== -1)
+        })
+
+        return filtered;
+    }
+
     render() {
         const { contacts } = this.state
+
+        const filtered = this.filterContacts(contacts, this.props.searchValue)
+
         return (
             <div className="row">
                 <div className="col s8 offset-s2">
@@ -51,9 +65,9 @@ class ContactList extends Component {
                         </div>
                     </div>
                     {
-                        (contacts.length) ?
-                            contacts.map(({ firstName, lastName, phoneNumber, id }) =>
-                                <ContactItem firstName={firstName} lastName={lastName} phoneNumber={phoneNumber} key={id} id={id} deleteReq={this.deleteReq}/>
+                        (filtered.length) ?
+                            filtered.map(({ firstName, lastName, phoneNumber, id }) =>
+                                <ContactItem firstName={firstName} lastName={lastName} phoneNumber={phoneNumber} key={id} id={id} deleteReq={this.deleteReq} />
                             ) :
                             <div>
                                 <div className="row center">
