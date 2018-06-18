@@ -54,10 +54,6 @@ class Main extends Component {
             })
     }
 
-    enter = (e) => {
-        console.log(e.target.keyCode)
-    }
-
     render() {
         return (
             <main className="container">
